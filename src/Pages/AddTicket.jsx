@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
+import { Header } from "../Components/Layout/Header"
 
 const addTicketStyles = makeStyles((theme) => ({
   div: {
@@ -106,6 +107,7 @@ export const AddTicket = () => {
   })
   return (
     <div>
+      <Header />
       <div className={classes.div}>
         <Breadcrumbs className = {classes.breadcrumb} aria-label = "breadcrumb">
           <Link className = {classes.link}>Home</Link>

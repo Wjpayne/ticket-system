@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
+import { Header } from "../Components/Layout/Header"
 
 const ticketListStyles = makeStyles(() => ({
   breadcrumb: {
@@ -48,6 +49,7 @@ const ticketListStyles = makeStyles(() => ({
     },
     borderRadius: "5px",
     top: "-20px",
+    width: "700px"
   },
 
   table: {
@@ -71,6 +73,7 @@ export const TicketList = () => {
 
   return (
     <div className={classes.div} style={{ padding: 30 }}>
+        <Header />
       <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
         <Link className={classes.link}>Home</Link>
         <Typography className={classes.current}>Tickets</Typography>

@@ -1,10 +1,10 @@
 import { Grid, makeStyles, Button, Typography, Breadcrumbs, Link } from "@material-ui/core";
 import React from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
+import { Header } from "../Components/Layout/Header"
 
 const dashboardStyles = makeStyles(() => ({
   add: {
-    marginTop: "200px",
     fontSize: "1.2rem",
     backgroundColor: "#585858",
     color: "#ffb347",
@@ -13,13 +13,32 @@ const dashboardStyles = makeStyles(() => ({
     marginTop: "30px",
     fontSize: "20px"
   },
+
+  div: {
+    position: "relative",
+    top: "400px"
+  },
+  breadcrumb: {
+    left: "30%",
+    position: "absolute",
+    top: "-25%"
+
+  },
+  link: {
+    color: "#585858",
+    cursor: "pointer"
+    
+  },
+  current: {
+    color: "black"
+  }
 }));
 
 export const Dashboard = () => {
   const classes = dashboardStyles();
   return (
-    <div>
-
+    <div className = {classes.div}>
+      <Header />
       <Grid
         container
         direction="row"
@@ -27,9 +46,10 @@ export const Dashboard = () => {
         alignItems="center"
       >
         <Grid item>
-          <Breadcrumbs aria-label = "breadcrumb">
-            <Link color = "inherit" href = "/">Home</Link>
-          </Breadcrumbs>
+        <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
+        <Link className={classes.link}>Home</Link>
+        <Typography className={classes.current}>Tickets</Typography>
+      </Breadcrumbs>
         </Grid>
         <Grid item>
           <Button className={classes.add}>Add New Ticket</Button>
