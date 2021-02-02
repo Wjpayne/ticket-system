@@ -1,8 +1,8 @@
-import { Grid, makeStyles, Button, Typography, Breadcrumbs, Link } from "@material-ui/core";
+import { Grid, makeStyles, Button, Typography, Breadcrumbs } from "@material-ui/core";
 import React from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
 import { Header } from "../Components/Layout/Header"
-
+import { Link } from "react-router-dom"
 const dashboardStyles = makeStyles(() => ({
   add: {
     fontSize: "1.2rem",
@@ -47,12 +47,10 @@ export const Dashboard = () => {
       >
         <Grid item>
         <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
-        <Link className={classes.link}>Home</Link>
-        <Typography className={classes.current}>Tickets</Typography>
       </Breadcrumbs>
         </Grid>
         <Grid item>
-          <Button className={classes.add}>Add New Ticket</Button>
+          <Button component = {Link} to = "/add-ticket"  className={classes.add}>Add New Ticket</Button>
           <Typography className={classes.text}>Total tickets: 50</Typography>
           <Grid item>
             <Typography className={classes.text}>

@@ -1,7 +1,6 @@
 import {
   Breadcrumbs,
   Button,
-  Link,
   makeStyles,
   Paper,
   TextField,
@@ -9,6 +8,7 @@ import {
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Header } from "../Components/Layout/Header"
+import { Link } from "react-router-dom"
 
 const addTicketStyles = makeStyles((theme) => ({
   div: {
@@ -110,7 +110,7 @@ export const AddTicket = () => {
       <Header />
       <div className={classes.div}>
         <Breadcrumbs className = {classes.breadcrumb} aria-label = "breadcrumb">
-          <Link className = {classes.link}>Home</Link>
+          <Link to = "/dashboard" className = {classes.link}>Home</Link>
           <Typography className = {classes.current}>Add New Ticket</Typography>
         </Breadcrumbs>
         <Paper className={classes.paper}>

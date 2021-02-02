@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { Link } from "react-router-dom"
 
 const ticketTableStyles = makeStyles(() => ({
   table: {
@@ -46,7 +47,7 @@ export const TicketTable = () => {
           <TableBody>
             <TableRow>
               <TableCell align="right">1</TableCell>
-              <TableCell align="right">problem</TableCell>
+              <TableCell align="right"><Link to="/ticket-page">problem</Link></TableCell>
               <TableCell align="right">pending</TableCell>
               <TableCell align="right">02-01-2021</TableCell>
             </TableRow>

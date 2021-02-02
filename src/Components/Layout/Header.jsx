@@ -13,6 +13,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
+import { Link, useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -127,7 +128,11 @@ export function Header() {
     drawerOpen(false);
   };
 
-  // useContext for userData
+  const history = useHistory();
+
+  const logOut = () => {
+    history.push("/")
+  }
 
   return (
     <div className={classes.grow}>
@@ -175,15 +180,15 @@ export function Header() {
         </Button>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemText>Dashboard</ListItemText>
+          <ListItem button component = {Link} to =  "/dashboard">
+            <ListItemText> Dashboard</ListItemText>
           </ListItem>
 
-          <ListItem button>
+          <ListItem button component = {Link} to =  "/ticket-list">
             <ListItemText>Tickets</ListItemText>
           </ListItem>
 
-          <ListItem button>
+          <ListItem button onClick = {logOut}>
             <ListItemText>Log out</ListItemText>
           </ListItem>
         </List>

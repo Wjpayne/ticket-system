@@ -2,7 +2,6 @@ import {
   Breadcrumbs,
   Button,
   Grid,
-  Link,
   makeStyles,
   TextField,
   Typography,
@@ -10,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
 import { Header } from "../Components/Layout/Header"
+import { Link } from "react-router-dom"
 
 const ticketListStyles = makeStyles(() => ({
   breadcrumb: {
@@ -75,7 +75,7 @@ export const TicketList = () => {
     <div className={classes.div} style={{ padding: 30 }}>
         <Header />
       <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
-        <Link className={classes.link}>Home</Link>
+        <Link to = "/dashboard" className={classes.link}>Home</Link>
         <Typography className={classes.current}>Tickets</Typography>
       </Breadcrumbs>
       <Grid
@@ -86,7 +86,7 @@ export const TicketList = () => {
         alignItems="center"
       >
         <Grid item>
-          <Button className={classes.add}>Add New Ticket</Button>
+          <Button component = {Link} to = "/add-ticket" className={classes.add}>Add New Ticket</Button>
         </Grid>
         <Grid item>
           <form>
