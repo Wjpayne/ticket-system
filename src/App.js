@@ -1,14 +1,19 @@
 import "./App.css";
-import { Layout } from "./Components/Layout/Layout";
+
 import LandingPage from "./Pages/LandingPage";
 import { AddTicket } from "./Components/NewTicket/AddTicket"
+import  Header  from "./Components/Layout/Header"
+import { TicketList } from "./Pages/TicketList";
+import { Dashboard } from "./Pages/Dashboard";
 
 function App() {
   return (
     <div className="App">
-      {/* <Layout /> */}
+      <Header />
+      {/* <Dashboard /> */}
       {/* <LandingPage /> */}
-      <AddTicket />
+      {/* <AddTicket /> */}
+      <TicketList />
       
     </div>
   );

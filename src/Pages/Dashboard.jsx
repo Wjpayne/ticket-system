@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Button, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Button, Typography, Breadcrumbs, Link } from "@material-ui/core";
 import React from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
 
@@ -19,12 +19,18 @@ export const Dashboard = () => {
   const classes = dashboardStyles();
   return (
     <div>
+
       <Grid
         container
         direction="row"
         justify="center"
         alignItems="center"
       >
+        <Grid item>
+          <Breadcrumbs aria-label = "breadcrumb">
+            <Link color = "inherit" href = "/">Home</Link>
+          </Breadcrumbs>
+        </Grid>
         <Grid item>
           <Button className={classes.add}>Add New Ticket</Button>
           <Typography className={classes.text}>Total tickets: 50</Typography>

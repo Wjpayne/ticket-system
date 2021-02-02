@@ -1,5 +1,7 @@
 import {
+  Breadcrumbs,
   Button,
+  Link,
   makeStyles,
   Paper,
   TextField,
@@ -61,6 +63,20 @@ const addTicketStyles = makeStyles((theme) => ({
     },
     height: "40px",
   },
+  breadcrumb: {
+    left: "30%",
+    position: "relative",
+    top: "25%"
+
+  },
+  link: {
+    color: "#585858",
+    cursor: "pointer"
+    
+  },
+  current: {
+    color: "black"
+  }
 }));
 
 export const AddTicket = () => {
@@ -91,6 +107,10 @@ export const AddTicket = () => {
   return (
     <div>
       <div className={classes.div}>
+        <Breadcrumbs className = {classes.breadcrumb} aria-label = "breadcrumb">
+          <Link className = {classes.link}>Home</Link>
+          <Typography className = {classes.current}>Add New Ticket</Typography>
+        </Breadcrumbs>
         <Paper className={classes.paper}>
           <Typography className={classes.title}>Add New Ticket</Typography>
 
