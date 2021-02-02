@@ -1,12 +1,11 @@
 import {
   Button,
-  Divider,
   makeStyles,
   Paper,
   TextField,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 
 const landingPageStyles = makeStyles((theme) => ({
   div: {
@@ -38,16 +37,13 @@ const landingPageStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     "& .Mui-focused": {
       color: "#585858",
-      
     },
   },
 
   form: {
     marginTop: "60px",
   },
-  divider: {
-    marginTop: "40px",
-  },
+
   button: {
     color: "#ffb347",
     width: "150px",
@@ -56,15 +52,48 @@ const landingPageStyles = makeStyles((theme) => ({
     marginTop: "20px",
     textTransform: "none",
   },
+
+  forget: {
+    color: "white",
+    position: "relative",
+    top: "15px",
+  },
 }));
 
 export default function LandingPage() {
   const classes = landingPageStyles();
+
+  //set state for form
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "email":
+        setEmail(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert("Please fill in the form");
+    }
+  };
   return (
     <div className={classes.div}>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>Client Login</Typography>
-        <Divider className={classes.divider} />
+
         <form className={classes.form}>
           <TextField
             InputProps={{
@@ -78,6 +107,8 @@ export default function LandingPage() {
             name="email"
             autoComplete="email"
             className={classes.input}
+            onChange={handleOnChange}
+            value={email}
           />
 
           <TextField
@@ -92,10 +123,14 @@ export default function LandingPage() {
             name="password"
             autoComplete="password"
             className={classes.input}
+            onChange={handleOnChange}
+            value={password}
           />
         </form>
 
-        <Button className={classes.button}>Login</Button>
+        <Button onClick={handleSubmit} className={classes.button}>
+          Login
+        </Button>
       </Paper>
     </div>
   );
