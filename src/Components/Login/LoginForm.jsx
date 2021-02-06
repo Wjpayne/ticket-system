@@ -6,6 +6,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
+import { loginPending, loginSuccess, loginFail } from "./LoginSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { CircularProgress } from '@material-ui/core';
+import { userLogin } from "../../api/userAPI"
+
+
+
 
 const landingPageStyles = makeStyles((theme) => ({
   div: {
@@ -58,15 +65,26 @@ const landingPageStyles = makeStyles((theme) => ({
     position: "relative",
     top: "15px",
   },
+  spinner: {
+    color: "#ffb347",
+    top: "30px",
+    left: "20px",
+    position: "relative"
+
+  }
 }));
 
 export default function LandingPage() {
   const classes = landingPageStyles();
 
   //set state for form
-
+  const [formLoad, setFormLoad] = useState("login")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {isLoading, isAuth} = useSelector(state => state.login)
+
+  const dispatch = useDispatch()
+ 
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -83,10 +101,22 @@ export default function LandingPage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Please fill in the form");
+      return alert("Please fill in the form");
+    }
+
+    dispatch(loginPending())
+
+    try {
+      const isAuth = await userLogin({email, password})
+      console.log(isAuth)
+
+
+    } catch (error) {
+      dispatch(loginFail(error.message))
+
     }
   };
   return (
@@ -131,6 +161,7 @@ export default function LandingPage() {
         <Button onClick={handleSubmit} className={classes.button}>
           Login
         </Button>
+        {isLoading && <CircularProgress className = {classes.spinner} />}
       </Paper>
     </div>
   );
