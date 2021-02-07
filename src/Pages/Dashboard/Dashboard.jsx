@@ -1,7 +1,7 @@
 import { Grid, makeStyles, Button, Typography, Breadcrumbs } from "@material-ui/core";
 import React from "react";
-import { TicketTable } from "../Components/TicketTable/TicketTable";
-import { Header } from "../Components/Layout/Header"
+import { TicketTable } from "../../Components/TicketTable/TicketTable";
+import { Header } from "../../Components/Layout/Header"
 import { Link } from "react-router-dom"
 const dashboardStyles = makeStyles(() => ({
   add: {

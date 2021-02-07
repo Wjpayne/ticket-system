@@ -3,7 +3,7 @@ import "./App.css";
 import LandingPage from "./Pages/LandingPage";
 import { AddTicket } from "./Pages/AddTicket";
 import { TicketList } from "./Pages/TicketList";
-import { Dashboard } from "./Pages/Dashboard";
+import { Dashboard } from "./Pages/Dashboard/Dashboard";
 import { TicketPage } from "./Pages/TicketPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { PrivateRoute } from './Components/PrivateRoutes/PrivateRoute';
