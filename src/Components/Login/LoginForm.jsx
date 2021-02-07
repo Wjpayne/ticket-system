@@ -5,7 +5,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { loginPending, loginSuccess, loginFail } from "./LoginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
@@ -77,8 +77,8 @@ export default function LandingPage() {
   const classes = landingPageStyles();
 
   //set state for form
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("payne.j.will@gmail.com");
+  const [password, setPassword] = useState("password");
   const { isLoading, isAuth, error } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
@@ -98,6 +98,12 @@ export default function LandingPage() {
         break;
     }
   };
+
+  useEffect(() => {
+
+    sessionStorage.getItem("accessJWT") && history.push('/dashboard')
+
+  }, [history, isAuth])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

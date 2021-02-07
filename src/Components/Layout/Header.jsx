@@ -131,6 +131,7 @@ export function Header() {
   const history = useHistory();
 
   const logOut = () => {
+    sessionStorage.removeItem("accessJWT")
     history.push("/")
   }
 

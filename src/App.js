@@ -1,5 +1,4 @@
 import "./App.css";
-
 import LandingPage from "./Pages/LandingPage";
 import { AddTicket } from "./Pages/AddTicket";
 import { TicketList } from "./Pages/TicketList";
