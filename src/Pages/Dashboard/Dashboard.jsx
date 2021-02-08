@@ -1,8 +1,12 @@
 import { Grid, makeStyles, Button, Typography, Breadcrumbs } from "@material-ui/core";
-import React from "react";
+import React, {useEffect} from "react";
 import { TicketTable } from "../../Components/TicketTable/TicketTable";
 import { Header } from "../../Components/Layout/Header"
 import { Link } from "react-router-dom"
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAllTickets } from '../../Components/TicketTable/TicketActions';
+
+
 const dashboardStyles = makeStyles(() => ({
   add: {
     fontSize: "1.2rem",
@@ -36,6 +40,15 @@ const dashboardStyles = makeStyles(() => ({
 
 export const Dashboard = () => {
   const classes = dashboardStyles();
+
+  const dispatch = useDispatch();
+  const { tickets } = useSelector((state) => state.tickets);
+
+  useEffect(() => {
+    if (!tickets.length) {
+      dispatch(fetchAllTickets());
+    }
+  }, [tickets, dispatch]);
   return (
     <div className = {classes.div}>
       <Header />

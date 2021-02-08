@@ -66,7 +66,7 @@ export const TicketList = () => {
 
   useEffect(() => {
     dispatch(fetchAllTickets());
-  }, [ dispatch]);
+  }, [dispatch]);
 
  const handleOnChange = e => {
    const { value } = e.target 
