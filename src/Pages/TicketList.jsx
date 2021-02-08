@@ -8,8 +8,10 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
-import { Header } from "../Components/Layout/Header"
-import { Link } from "react-router-dom"
+import { Header } from "../Components/Layout/Header";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchAllTickets, filterSearchTicket } from "../Components/TicketTable/TicketActions";
 
 const ticketListStyles = makeStyles(() => ({
   breadcrumb: {
@@ -34,7 +36,7 @@ const ticketListStyles = makeStyles(() => ({
     backgroundColor: "#585858",
     color: "#ffb347",
     height: "57px",
-    top: "20px"
+    top: "20px",
   },
 
   text: {
@@ -49,7 +51,7 @@ const ticketListStyles = makeStyles(() => ({
     },
     borderRadius: "5px",
     top: "-20px",
-    width: "700px"
+    width: "700px",
   },
 
   table: {
@@ -59,23 +61,25 @@ const ticketListStyles = makeStyles(() => ({
 
 export const TicketList = () => {
   const classes = ticketListStyles();
+  const dispatch = useDispatch();
+  const [dispTicket, setDispTicket] = useState();
 
-  const [value, setValue] = useState("");
-//   const [dispTicket, setDispTicket] = useState([]);
+  useEffect(() => {
+    dispatch(fetchAllTickets());
+  }, [ dispatch]);
 
+ const handleOnChange = e => {
+   const { value } = e.target 
+   dispatch(filterSearchTicket())
 
-
-  useEffect(() => {}, [value, ]);
-
-  const handleOnChange = (e) => {
-    setValue(e.target.value);
-  };
-
+ }
   return (
     <div className={classes.div} style={{ padding: 30 }}>
-        <Header />
+      <Header />
       <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
-        <Link to = "/dashboard" className={classes.link}>Home</Link>
+        <Link to="/dashboard" className={classes.link}>
+          Home
+        </Link>
         <Typography className={classes.current}>Tickets</Typography>
       </Breadcrumbs>
       <Grid
@@ -86,7 +90,9 @@ export const TicketList = () => {
         alignItems="center"
       >
         <Grid item>
-          <Button component = {Link} to = "/add-ticket" className={classes.add}>Add New Ticket</Button>
+          <Button component={Link} to="/add-ticket" className={classes.add}>
+            Add New Ticket
+          </Button>
         </Grid>
         <Grid item>
           <form>
@@ -99,7 +105,6 @@ export const TicketList = () => {
               variant="filled"
               id="search"
               name="search"
-              value={value}
               onChange={handleOnChange}
             ></TextField>
           </form>

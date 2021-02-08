@@ -14,6 +14,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import { Link, useHistory } from "react-router-dom";
+import { userLogOut } from '../../api/userAPI';
+
 
 const drawerWidth = 240;
 
@@ -132,6 +134,8 @@ export function Header() {
 
   const logOut = () => {
     sessionStorage.removeItem("accessJWT")
+    localStorage.removeItem("crmSite")
+    userLogOut()
     history.push("/")
   }
 

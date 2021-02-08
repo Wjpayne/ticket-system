@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom"
+import { useSelector } from 'react-redux';
 
 const ticketTableStyles = makeStyles(() => ({
   table: {
@@ -28,6 +29,8 @@ const ticketTableStyles = makeStyles(() => ({
 
 export const TicketTable = () => {
   const classes = ticketTableStyles();
+
+  const {tickets, isLoading, error} = useSelector((state) => state.tickets)
   return (
     <div>
       <TableContainer className={classes.container} component={Paper}>

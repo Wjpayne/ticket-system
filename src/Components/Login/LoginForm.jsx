@@ -9,10 +9,10 @@ import React, { useEffect, useState } from "react";
 import { loginPending, loginSuccess, loginFail } from "./LoginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
-import { Alert, AlertTitle } from '@material-ui/lab'
+import { Alert, AlertTitle } from "@material-ui/lab";
 import { userLogin } from "../../api/userAPI";
-import { useHistory } from "react-router-dom"
-import {getUserProfile} from "../../Pages/Dashboard/UserActions"
+import { useHistory } from "react-router-dom";
+import { getUserProfile } from "../../Pages/Dashboard/UserActions";
 
 const landingPageStyles = makeStyles((theme) => ({
   div: {
@@ -100,10 +100,8 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
-
-    sessionStorage.getItem("accessJWT") && history.push('/dashboard')
-
-  }, [history, isAuth])
+    sessionStorage.getItem("accessJWT") && history.push("/dashboard");
+  }, [history, isAuth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,9 +117,9 @@ export default function LandingPage() {
       if (isAuth.status === "error") {
         return dispatch(loginFail(isAuth.message));
       }
-      dispatch(loginSuccess())
-      dispatch(getUserProfile())
-      history.push("/dashboard")
+      dispatch(loginSuccess());
+      dispatch(getUserProfile());
+      history.push("/dashboard");
     } catch (error) {
       dispatch(loginFail(error.message));
     }
@@ -132,7 +130,12 @@ export default function LandingPage() {
         <Typography className={classes.title}>Client Login</Typography>
 
         <form className={classes.form}>
-          {error && <Alert  severity="error"><AlertTitle style = {{textAlign: "left"}}>Error</AlertTitle>Inavlid Credentials</Alert> }
+          {error && (
+            <Alert severity="error">
+              <AlertTitle style={{ textAlign: "left" }}>Error</AlertTitle>
+              Inavlid Credentials
+            </Alert>
+          )}
           <TextField
             InputProps={{
               disableUnderline: true,
@@ -159,7 +162,7 @@ export default function LandingPage() {
             id="password"
             label="Password"
             name="password"
-            type = "password"
+            type="password"
             autoComplete="password"
             className={classes.input}
             onChange={handleOnChange}

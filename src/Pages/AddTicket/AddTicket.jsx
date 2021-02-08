@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { Header } from "../Components/Layout/Header"
+import { Header } from "../../Components/Layout/Header"
 import { Link } from "react-router-dom"
 
 const addTicketStyles = makeStyles((theme) => ({

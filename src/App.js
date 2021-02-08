@@ -1,6 +1,6 @@
 import "./App.css";
 import LandingPage from "./Pages/LandingPage";
-import { AddTicket } from "./Pages/AddTicket";
+import { AddTicket } from "./Pages/AddTicket/AddTicket";
 import { TicketList } from "./Pages/TicketList";
 import { Dashboard } from "./Pages/Dashboard/Dashboard";
 import { TicketPage } from "./Pages/TicketPage";

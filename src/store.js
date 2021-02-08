@@ -1,7 +1,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 
-import ticketsReducer from "./Components/TicketSlice/TicketSlice";
+import ticketsReducer from "./Components/TicketTable/TicketSlice";
 import loginReducer from "./Components/Login/LoginSlice";
 import userReducer from "./Pages/Dashboard/UserSlice"
 
