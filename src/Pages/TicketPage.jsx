@@ -9,15 +9,19 @@ import {
   FormControl,
   Button,
   TextField,
-} from "@material-ui/core";
-import React, { useEffect } from "react";
-import { Header } from "../Components/Layout/Header"
-import { Link } from "react-router-dom"
-// import { MessageHistory } from '../Components/MessageHistory/MessageHistory';
-import { fetchSingleTicket } from '../Components/TicketTable/TicketActions';
-import { useDispatch } from 'react-redux';
-import { useParams } from "react-router-dom";
+  CircularProgress,
 
+} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Header } from "../Components/Layout/Header";
+import { Link } from "react-router-dom";
+// import { MessageHistory } from '../Components/MessageHistory/MessageHistory';
+import { fetchSingleTicket } from "../Components/TicketTable/TicketActions";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { MessageHistory } from "../Components/MessageHistory/MessageHistory";
+import { Alert } from "@material-ui/lab";
+import {replyOnTicket} from "../Components/TicketTable/TicketActions"
 
 const ticketPageStyles = makeStyles((theme) => ({
   breadcrumb: {
@@ -50,92 +54,110 @@ const ticketPageStyles = makeStyles((theme) => ({
     height: "1000px",
     width: "1000px",
     outline: "none",
-    overflow: "scroll"
+    overflow: "scroll",
   },
   text: {
     fontWeight: "bold",
-    marginTop: "30px"
-    
+    marginTop: "30px",
   },
 
-  
-
   button: {
-      marginTop: "20px"
+    marginTop: "20px",
   },
 
   form: {
-      position: "absolute",
-      marginTop: "40px",
-      left: "50%",
-      transform: "translateX(-50%)"
+    position: "absolute",
+    marginTop: "40px",
+    left: "50%",
+    transform: "translateX(-50%)",
   },
 
   input: {
     "& .Mui-focused": {
-        color: "#585858",
-      },
-  }
+      color: "#585858",
+    },
+  },
 }));
 
 export const TicketPage = () => {
   const classes = ticketPageStyles();
-  const   {ID}  = useParams()
-  const dispatch = useDispatch()
+  const { ID } = useParams();
+  const dispatch = useDispatch();
+  const { isLoading, error, selectedTicket } = useSelector(
+    (state) => state.tickets
+  );
 
- 
-  
-  console.log(ID)
+  const { user:{name} } = useSelector(
+    (state) => state.user
+  );
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    dispatch(fetchSingleTicket(ID))
+    dispatch(fetchSingleTicket(ID));
+  }, [ID, dispatch]);
 
-  }, [ ID, dispatch])
-
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
 
   const onSubmit = () => {
-
-    console.log("success")
-
-  }
-
+   const  msgObj = {
+      message,
+      sender: name
+    }
+    dispatch(replyOnTicket(ID, msgObj ))
+    
+  };
 
   return (
     <div className={classes.div}>
       <Header />
       <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
-        <Link  to="/dashboard" className={classes.link}>Home</Link>
+        <Link to="/dashboard" className={classes.link}>
+          Home
+        </Link>
         <Typography className={classes.current}>Ticket</Typography>
       </Breadcrumbs>
       <Paper className={classes.paper}>
         <Grid container direction="column" alignItems="flex-start">
-          <div className={classes.text}>Subject: </div>
-          <div className={classes.text}>Ticket Open: </div>
-          <div className={classes.text}>Status: </div>
+          <Grid item>
+            {isLoading && <CircularProgress />}
+            {error && <Alert variant="error"></Alert>}
+          </Grid>
+
+          <div className={classes.text}>Subject: {selectedTicket.subject} </div>
+          <div className={classes.text}>
+            Ticket Open: {selectedTicket.openAt}{" "}
+          </div>
+          <div className={classes.text}>Status: {selectedTicket.status} </div>
         </Grid>
-        {/* <MessageHistory>
+        {selectedTicket.conversations && (
+          <MessageHistory msg={selectedTicket.conversations} />
+        )}
 
-        </MessageHistory> */}
-
-
-        <form className = {classes.form}>
+        <form className={classes.form}>
           <FormControl>
             <FormGroup>
-              <FormLabel component="legend">Please reply with a message here or update the ticket</FormLabel>
+              <FormLabel component="legend">
+                Please reply with a message here or update the ticket
+              </FormLabel>
               <TextField
                 InputProps={{
                   disableUnderline: true,
                 }}
                 variant="filled"
-                id = "reply"
-                name = "reply"
-                label = "Reply..."
-                rows = {10}
+                id="reply"
+                name="reply"
+                label="Reply..."
+                rows={10}
                 multiline
-                className = {classes.input}
-
+                value={message}
+                onChange={handleChange}
+                className={classes.input}
               ></TextField>
-              <Button onClick = {onSubmit} className = {classes.button}>Reply</Button>
+              <Button onClick={onSubmit} className={classes.button}>
+                Reply
+              </Button>
             </FormGroup>
           </FormControl>
         </form>

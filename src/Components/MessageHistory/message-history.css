@@ -1,0 +1,26 @@
+.message-history {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.message-history:nth-child(odd) {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+  
+}
+
+.message {
+  margin: 5px;
+  padding: 1rem;
+  width: 80%;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.message-name {
+    font-weight:bold;
+}
