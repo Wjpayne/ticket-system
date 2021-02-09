@@ -10,9 +10,14 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Header } from "../Components/Layout/Header"
 import { Link } from "react-router-dom"
+// import { MessageHistory } from '../Components/MessageHistory/MessageHistory';
+import { fetchSingleTicket } from '../Components/TicketTable/TicketActions';
+import { useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
+
 
 const ticketPageStyles = makeStyles((theme) => ({
   breadcrumb: {
@@ -53,26 +58,7 @@ const ticketPageStyles = makeStyles((theme) => ({
     
   },
 
-  messageHistory: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    "& nth-child(even)": {
-      flexDirection: "row-reverse",
-    },
-    marginTop: "30px",
-  },
-
-  textMessage: {
-    fontWeight: "bold",
-  },
-
-  message: {
-    padding: "1rem",
-    width: "80%",
-    border: "1px solid #ced4da",
-    borderRadius: "5px",
-  },
+  
 
   button: {
       marginTop: "20px"
@@ -94,16 +80,18 @@ const ticketPageStyles = makeStyles((theme) => ({
 
 export const TicketPage = () => {
   const classes = ticketPageStyles();
+  const   {ID}  = useParams()
+  const dispatch = useDispatch()
 
-  const [reply, setReply] = useState("")
+ 
+  
+  console.log(ID)
 
-  useEffect(() => {}, [reply])
+  useEffect(() => {
+    dispatch(fetchSingleTicket(ID))
 
-  const handleOnChange = (e) => {
+  }, [ ID, dispatch])
 
-    setReply(e.target.value)
-
-  }
 
   const onSubmit = () => {
 
@@ -125,13 +113,10 @@ export const TicketPage = () => {
           <div className={classes.text}>Ticket Open: </div>
           <div className={classes.text}>Status: </div>
         </Grid>
-        <div className={classes.messageHistory}>
-          <div>
-            <div className={classes.textMessage}>Client</div>
-            <div className={classes.textMessage}>Date</div>
-          </div>
-          <div className={classes.message}>Message</div>
-        </div>
+        {/* <MessageHistory>
+
+        </MessageHistory> */}
+
 
         <form className = {classes.form}>
           <FormControl>
@@ -148,8 +133,6 @@ export const TicketPage = () => {
                 rows = {10}
                 multiline
                 className = {classes.input}
-                value = {reply}
-                onChange = {handleOnChange}
 
               ></TextField>
               <Button onClick = {onSubmit} className = {classes.button}>Reply</Button>

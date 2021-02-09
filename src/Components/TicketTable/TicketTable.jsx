@@ -7,8 +7,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom"
+import { useSelector } from 'react-redux';
 
 const ticketTableStyles = makeStyles(() => ({
   table: {
@@ -21,8 +21,10 @@ const ticketTableStyles = makeStyles(() => ({
 
   head: {
     fontSize: "20px",
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
+
+
 }));
 
 export const TicketTable = () => {
@@ -42,43 +44,29 @@ export const TicketTable = () => {
           size="small"
           aria-label="a dense table"
         >
-          <TableHead>
+          <TableHead >
             <TableRow>
-              <TableCell className={classes.head} align="left">
-                #{" "}
-              </TableCell>
-              <TableCell className={classes.head} align="left">
-                Subject
-              </TableCell>
-              <TableCell className={classes.head} align="left">
-                Status
-              </TableCell>
-              <TableCell className={classes.head} align="left">
-                Date
-              </TableCell>
+              <TableCell className = {classes.head}align="right"># </TableCell>
+              <TableCell className = {classes.head} align="right">Subject</TableCell>
+              <TableCell className = {classes.head} align="right">Status</TableCell>
+              <TableCell className = {classes.head} align="right">Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {searchTicketList.length ? (
-              searchTicketList.map((row) => (
-                <TableRow key={row._id}>
-                  <TableCell align="left">{row._id}</TableCell>
-                  <TableCell align="left">
-                    <Link to={`/ticket/${row._id}`}>{row.subject}</Link>
-                  </TableCell>
-                  <TableCell align="left">{row.status}</TableCell>
-                  <TableCell align="left">
-                    {row.openAt && new Date(row.openAt).toLocaleString()}
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell align = "right">
-                  No Tickets
-                </TableCell>
-              </TableRow>
-            )}
+          {searchTicketList.length ? (searchTicketList.map((row) => (
+            <TableRow key={row._id}>
+              
+              <TableCell align="right">{row._id}</TableCell>
+              <TableCell align="right"><Link to={`/ticket/${row._id}`} >{row.subject}</Link></TableCell>
+              <TableCell align="right">{row.status}</TableCell>
+              <TableCell align="right">{row.openAt && new Date(row.openAt).toLocaleString()}</TableCell>
+            </TableRow>
+          ))
+          ) : (
+            <TableRow>
+
+            </TableRow>
+          )}
           </TableBody>
         </Table>
       </TableContainer>

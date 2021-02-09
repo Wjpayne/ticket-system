@@ -24,7 +24,7 @@ function App() {
           <PrivateRoute path = "/ticket-list">
           <TicketList />
           </PrivateRoute>
-          <PrivateRoute path = "/ticket-page">
+          <PrivateRoute path = "/ticket/:ID">
           <TicketPage />
           </PrivateRoute>
         </Switch>

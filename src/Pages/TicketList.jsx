@@ -6,12 +6,12 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { TicketTable } from "../Components/TicketTable/TicketTable";
 import { Header } from "../Components/Layout/Header";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchAllTickets, filterSearchTicket } from "../Components/TicketTable/TicketActions";
+import { fetchAllTickets } from "../Components/TicketTable/TicketActions";
 
 const ticketListStyles = makeStyles(() => ({
   breadcrumb: {
@@ -60,19 +60,12 @@ const ticketListStyles = makeStyles(() => ({
 }));
 
 export const TicketList = () => {
-  const classes = ticketListStyles();
+  const classes = ticketListStyles()
   const dispatch = useDispatch();
-  const [dispTicket, setDispTicket] = useState();
 
   useEffect(() => {
     dispatch(fetchAllTickets());
   }, [dispatch]);
-
- const handleOnChange = e => {
-   const { value } = e.target 
-   dispatch(filterSearchTicket())
-
- }
   return (
     <div className={classes.div} style={{ padding: 30 }}>
       <Header />
@@ -105,7 +98,6 @@ export const TicketList = () => {
               variant="filled"
               id="search"
               name="search"
-              onChange={handleOnChange}
             ></TextField>
           </form>
           <Grid item>
