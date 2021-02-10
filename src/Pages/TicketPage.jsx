@@ -15,7 +15,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { Header } from "../Components/Layout/Header";
 import { Link } from "react-router-dom";
-// import { MessageHistory } from '../Components/MessageHistory/MessageHistory';
 import { fetchSingleTicket } from "../Components/TicketTable/TicketActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -92,9 +91,6 @@ export const TicketPage = () => {
   );
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    dispatch(fetchSingleTicket(ID));
-  }, [ID, dispatch]);
 
   const handleChange = (e) => {
     setMessage(e.target.value);
@@ -106,8 +102,13 @@ export const TicketPage = () => {
       sender: name
     }
     dispatch(replyOnTicket(ID, msgObj ))
+    setMessage("")
     
   };
+
+  useEffect(() => {
+    dispatch(fetchSingleTicket(ID));
+  }, [ID, dispatch, message]);
 
   return (
     <div className={classes.div}>
@@ -127,7 +128,8 @@ export const TicketPage = () => {
 
           <div className={classes.text}>Subject: {selectedTicket.subject} </div>
           <div className={classes.text}>
-            Ticket Open: {selectedTicket.openAt}{" "}
+            Ticket Open: {selectedTicket.openAt &&
+              new Date(selectedTicket.openAt).toLocaleString()} 
           </div>
           <div className={classes.text}>Status: {selectedTicket.status} </div>
         </Grid>
@@ -135,7 +137,7 @@ export const TicketPage = () => {
           <MessageHistory msg={selectedTicket.conversations} />
         )}
 
-        <form className={classes.form}>
+        <form className={classes.form} >
           <FormControl>
             <FormGroup>
               <FormLabel component="legend">
@@ -155,7 +157,7 @@ export const TicketPage = () => {
                 onChange={handleChange}
                 className={classes.input}
               ></TextField>
-              <Button onClick={onSubmit} className={classes.button}>
+              <Button onClick = {onSubmit}  className={classes.button}>
                 Reply
               </Button>
             </FormGroup>
