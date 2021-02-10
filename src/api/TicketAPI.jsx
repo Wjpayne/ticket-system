@@ -79,7 +79,7 @@ export const createNewTicket = (frmData) => {
   console.log("from api", frmData);
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.post(ticketUrl, frmData, {
+      const result = await axios.post(ticketUrl + "addticket", frmData, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },

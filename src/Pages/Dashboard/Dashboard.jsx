@@ -1,11 +1,16 @@
-import { Grid, makeStyles, Button, Typography, Breadcrumbs } from "@material-ui/core";
-import React, {useEffect} from "react";
-import { TicketTable } from "../../Components/TicketTable/TicketTable";
-import { Header } from "../../Components/Layout/Header"
-import { Link } from "react-router-dom"
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllTickets } from '../../Components/TicketTable/TicketActions';
-
+import {
+  Grid,
+  makeStyles,
+  Button,
+  Typography,
+} from "@material-ui/core";
+import React, { useEffect } from "react";
+// import { TicketTable } from "../../Components/TicketTable/TicketTable";
+import { Header } from "../../Components/Layout/Header";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllTickets } from "../TicketPage/TicketActions";
+import { TicketTableDashboard } from '../../Components/TicketTableDashboard/TicketTableDashboard';
 
 const dashboardStyles = makeStyles(() => ({
   add: {
@@ -15,27 +20,21 @@ const dashboardStyles = makeStyles(() => ({
   },
   text: {
     marginTop: "30px",
-    fontSize: "20px"
+    fontSize: "20px",
   },
 
   div: {
     position: "relative",
-    top: "400px"
+    top: "200px",
   },
-  breadcrumb: {
-    left: "30%",
-    position: "absolute",
-    top: "-25%"
 
-  },
   link: {
     color: "#585858",
-    cursor: "pointer"
-    
+    cursor: "pointer",
   },
   current: {
-    color: "black"
-  }
+    color: "black",
+  },
 }));
 
 export const Dashboard = () => {
@@ -45,32 +44,35 @@ export const Dashboard = () => {
   const { tickets } = useSelector((state) => state.tickets);
 
   useEffect(() => {
-    if (!tickets.length) {
+    
       dispatch(fetchAllTickets());
-    }
-  }, [tickets, dispatch]);
+    
+  }, [dispatch]);
+
+  const pendingTickets = tickets.filter((row) => row.status !== "Closed");
+  const totalTickets = tickets.length;
   return (
-    <div className = {classes.div}>
+    <div className={classes.div}>
       <Header />
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
+      <Grid container direction="row" justify="center" alignItems="center">
         <Grid item>
-        <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
-      </Breadcrumbs>
         </Grid>
         <Grid item>
-          <Button component = {Link} to = "/add-ticket"  className={classes.add}>Add New Ticket</Button>
-          <Typography className={classes.text}>Total tickets: 50</Typography>
+          <Button component={Link} to="/add-ticket" className={classes.add}>
+            Add New Ticket
+          </Button>
+          <Typography className={classes.text}>
+            Total tickets: {totalTickets}
+          </Typography>
+          <Typography className={classes.text}>
+            Pending Tickets: {pendingTickets.length}
+          </Typography>
           <Grid item>
             <Typography className={classes.text}>
               Recently added tickets
             </Typography>
             <Grid item>
-                <TicketTable />
+              <TicketTableDashboard />
             </Grid>
           </Grid>
         </Grid>

@@ -11,7 +11,7 @@ import { TicketTable } from "../Components/TicketTable/TicketTable";
 import { Header } from "../Components/Layout/Header";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchAllTickets } from "../Components/TicketTable/TicketActions";
+import { fetchAllTickets, filterSearchTicket } from "./TicketPage/TicketActions";
 
 const ticketListStyles = makeStyles(() => ({
   breadcrumb: {
@@ -66,6 +66,12 @@ export const TicketList = () => {
   useEffect(() => {
     dispatch(fetchAllTickets());
   }, [dispatch]);
+
+  const handleChange = (e) => {
+    const { value } = e.target 
+    
+    dispatch(filterSearchTicket(value))
+  }
   return (
     <div className={classes.div} style={{ padding: 30 }}>
       <Header />
@@ -98,6 +104,7 @@ export const TicketList = () => {
               variant="filled"
               id="search"
               name="search"
+              onChange = {handleChange}
             ></TextField>
           </form>
           <Grid item>

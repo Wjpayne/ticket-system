@@ -5,10 +5,17 @@ import {
   Paper,
   TextField,
   Typography,
+  IconButton,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { Header } from "../../Components/Layout/Header"
-import { Link } from "react-router-dom"
+import { Header } from "../../Components/Layout/Header";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { openNewTicket } from "./AddTicketActions";
+import { shortText } from "../../utils/Validation";
+import { restSuccessMsg, restErrorMsg } from "./AddTicketSlice";
+import { Alert } from "@material-ui/lab";
+import CloseIcon from "@material-ui/icons/Close";
 
 const addTicketStyles = makeStyles((theme) => ({
   div: {
@@ -49,7 +56,7 @@ const addTicketStyles = makeStyles((theme) => ({
 
   button: {
     color: "#ffb347",
-    width: "150px",
+    width: "200px",
     height: "50px",
     fontSize: "30px",
     marginTop: "20px",
@@ -67,31 +74,63 @@ const addTicketStyles = makeStyles((theme) => ({
   breadcrumb: {
     left: "30%",
     position: "relative",
-    top: "25%"
-
+    top: "25%",
   },
   link: {
     color: "#585858",
-    cursor: "pointer"
-    
+    cursor: "pointer",
   },
   current: {
-    color: "black"
-  }
+    color: "black",
+  },
 }));
+
+const initialData = {
+  subject: "",
+  date: "",
+  message: "",
+};
+
+const initialFormError = {
+  subject: false,
+  date: false,
+  message: false,
+};
 
 export const AddTicket = () => {
   const classes = addTicketStyles();
 
-  const initialData = {
-    subject: "",
-    date: "",
-    issue: "",
-  };
-
   const [formData, setFormData] = useState(initialData);
+  const [formDataError, setFormDataError] = useState(initialFormError);
+  const dispatch = useDispatch();
 
-  useEffect(() => {}, [formData]);
+  const {
+    user: { name },
+  } = useSelector((state) => state.user);
+
+  const { error, successMsg } = useSelector((state) => state.openTicket);
+
+  useEffect(() => {
+    return () => {
+      successMsg && dispatch(restSuccessMsg());
+      error && dispatch(restErrorMsg());
+    };
+  }, [dispatch, formData, formDataError, error, successMsg]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setFormDataError(initialFormError);
+
+    const isSubjectValid = await shortText(formData.subject);
+
+    setFormDataError({
+      ...initialFormError,
+      subject: !isSubjectValid,
+    });
+
+    dispatch(openNewTicket({ ...formData, sender: name }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -101,20 +140,58 @@ export const AddTicket = () => {
     });
   };
 
-  const handleSubmit = ((e) => {
-    e.preventDefault();
-    console.log("submitted", formData)
-  })
   return (
     <div>
       <Header />
       <div className={classes.div}>
-        <Breadcrumbs className = {classes.breadcrumb} aria-label = "breadcrumb">
-          <Link to = "/dashboard" className = {classes.link}>Home</Link>
-          <Typography className = {classes.current}>Add New Ticket</Typography>
+        <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
+          <Link to="/dashboard" className={classes.link}>
+            Home
+          </Link>
+          <Typography className={classes.current}>Add New Ticket</Typography>
         </Breadcrumbs>
         <Paper className={classes.paper}>
           <Typography className={classes.title}>Add New Ticket</Typography>
+          <div>
+            {error && (
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      dispatch(restErrorMsg());
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                severity="error"
+              >
+                {error}
+              </Alert>
+            )}
+            {successMsg && (
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      dispatch(restSuccessMsg());
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                severity="success"
+              >
+                {successMsg}
+              </Alert>
+            )}
+          </div>
 
           <form className={classes.form}>
             <TextField
@@ -153,16 +230,18 @@ export const AddTicket = () => {
               variant="filled"
               margin="normal"
               required
-              id="issue"
+              id="message"
               label="Please explain your issue"
-              name="issue"
+              name="message"
               className={classes.input}
               onChange={handleChange}
-              value={formData.issue}
+              value={formData.message}
             />
           </form>
 
-          <Button onClick = {handleSubmit} className={classes.button}>Submit</Button>
+          <Button onClick={handleSubmit} className={classes.button}>
+            Open Ticket
+          </Button>
         </Paper>
       </div>
     </div>
