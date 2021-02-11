@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 const ticketTableStyles = makeStyles(() => ({
   table: {
-    minWidth: 650,
+    
   },
 
   container: {
@@ -30,10 +30,10 @@ const ticketTableStyles = makeStyles(() => ({
 export const TicketTable = () => {
   const classes = ticketTableStyles();
 
-  const { searchTicketList, isLoading, error } = useSelector(
+  const { searchTicketList, error } = useSelector(
     (state) => state.tickets
   );
-  if (isLoading) return <h3>Loading ...</h3>;
+  
   if (error) return <h3>{error}</h3>;
 
   return (

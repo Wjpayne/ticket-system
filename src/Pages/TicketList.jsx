@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchAllTickets, filterSearchTicket } from "./TicketPage/TicketActions";
 
-const ticketListStyles = makeStyles(() => ({
+const ticketListStyles = makeStyles((theme) => ({
   breadcrumb: {
     left: "25%",
     position: "relative",
@@ -30,6 +30,13 @@ const ticketListStyles = makeStyles(() => ({
     position: "relative",
     height: "1300px",
     top: "200px",
+    [theme.breakpoints.down("md")]: {
+      height: "675px",
+      width: "330px",
+      left: "50%",
+      transform: "translate(-50%)",
+      top: "200px",
+    },
   },
   add: {
     fontSize: "1.2rem",
@@ -73,8 +80,10 @@ export const TicketList = () => {
     dispatch(filterSearchTicket(value))
   }
   return (
+    <div>
+       <Header />
     <div className={classes.div} style={{ padding: 30 }}>
-      <Header />
+     
       <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
         <Link to="/dashboard" className={classes.link}>
           Home
@@ -112,6 +121,7 @@ export const TicketList = () => {
           </Grid>
         </Grid>
       </Grid>
+    </div>
     </div>
   );
 };

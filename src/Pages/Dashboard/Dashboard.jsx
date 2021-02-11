@@ -55,9 +55,8 @@ export const Dashboard = () => {
     <div className={classes.div}>
       <Header />
       <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item>
-        </Grid>
-        <Grid item>
+        
+        <Grid xs = {12} md = {8} lg = {6} xl = {4} item>
           <Button component={Link} to="/add-ticket" className={classes.add}>
             Add New Ticket
           </Button>
@@ -71,7 +70,7 @@ export const Dashboard = () => {
             <Typography className={classes.text}>
               Recently added tickets
             </Typography>
-            <Grid item>
+            <Grid  item>
               <TicketTableDashboard />
             </Grid>
           </Grid>

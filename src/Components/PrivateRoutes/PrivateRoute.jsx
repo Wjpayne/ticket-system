@@ -20,14 +20,17 @@ export const PrivateRoute = ({ children, ...rest }) => {
     !sessionStorage.getItem("accessJWT") && localStorage.getItem("crmSite") && 
     updateAccessJWT();
 
-   !isAuth && sessionStorage.getItem("accessJWT") && dispatch(loginSuccess());
+    
+    !isAuth && sessionStorage.getItem("accessJWT") && dispatch(loginSuccess());
+    
+    
   }, [dispatch, isAuth, user._id]);
 
   return (
     <Route
       {...rest}
       render={() =>
-        isAuth ? <DefaultLayout>{children}</DefaultLayout> : <Redirect to="/" />
+        isAuth ? <DefaultLayout>{children}</DefaultLayout> : <Redirect to="/" /> 
       }
     />
   );

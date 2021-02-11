@@ -36,6 +36,12 @@ const ticketPageStyles = makeStyles((theme) => ({
     position: "relative",
     height: "1300px",
     top: "200px",
+    [theme.breakpoints.down("md")]: {
+      height: "675px",
+      width: "350px",
+      left: "50%",
+      transform: "translate(-50%)",
+    },
   },
   current: {
     color: "black",
@@ -53,6 +59,12 @@ const ticketPageStyles = makeStyles((theme) => ({
     width: "1000px",
     outline: "none",
     overflow: "scroll",
+    [theme.breakpoints.down("md")]: {
+      height: "675px",
+      width: "350px",
+      left: "50%",
+      top: "420px",
+    },
   },
   text: {
     marginBottom: "60px",
@@ -126,8 +138,10 @@ export const TicketPage = () => {
   }, [ID, dispatch, message, replyTicketError, error, resetErrorMsg]);
 
   return (
-    <div className={classes.div}>
+    <div>
       <Header />
+    <div className={classes.div}>
+      
       <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
         <Link to="/dashboard" className={classes.link}>
           Home
@@ -245,6 +259,7 @@ export const TicketPage = () => {
           </FormControl>
         </form>
       </Paper>
+    </div>
     </div>
   );
 };
