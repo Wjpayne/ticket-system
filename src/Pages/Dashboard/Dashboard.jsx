@@ -5,7 +5,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
-// import { TicketTable } from "../../Components/TicketTable/TicketTable";
 import { Header } from "../../Components/Layout/Header";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
